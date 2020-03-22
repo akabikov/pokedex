@@ -1,7 +1,7 @@
 // Shows a single Pokemon, with their name, image, and type.
 
 import React from 'react';
-// import pokemons from './pokemons';
+import './Pokecard.css';
 
 class Pokecard extends React.Component {
     getImgSrc(id) {
@@ -11,15 +11,16 @@ class Pokecard extends React.Component {
     }
 
     render() {
+        const {id, name, type, base_experience} = this.props.pokemon;
         return (
-            <div>
-                <h2>{this.props.pokemon.name}</h2>
+            <div className="pokecard">
+                <h2>{name}</h2>
                 <img 
-                    src={this.getImgSrc(this.props.pokemon.id)} 
-                    alt={this.props.pokemon.name}
+                    src={this.getImgSrc(id)} 
+                    alt={name}
                 />
-                <div>Type: {this.props.pokemon.type}</div>
-                <div>EXP: {this.props.pokemon.base_experience}</div>
+                <div>Type: {type}</div>
+                <div>EXP: {base_experience}</div>
             </div>
         );
     }
