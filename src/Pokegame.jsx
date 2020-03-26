@@ -3,7 +3,7 @@ import Pokedex from "./Pokedex";
 import pokemons from "./pokemons";
 
 class Pokegame extends React.Component {
-    dealCards(array) {
+    shuffle(array) {
         let shuffled = [...array];
 
         for(let i = shuffled.length - 1; i > 0; i--) {
@@ -11,12 +11,40 @@ class Pokegame extends React.Component {
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
 
-        if (shuffled.length % 2 > 0) shuffled.pop();
+        return shuffled;
+    }
 
-        let delimeter = shuffled.length / 2;
+    cut(array) {
+        let middle = Math.floor(array.length / 2);
 
-        return [shuffled.slice(0, delimeter), 
-                shuffled.slice(delimeter)];
+        return [array.slice(0, middle), 
+                array.slice(middle, middle * 2)];
+    }
+    
+    getTotalExperience(array) {
+        return array.reduce((sum, el) => sum + el.base_experience, 0);
+    }
+
+    setWinner(hands) {
+        let winnerIndex = hands.reduce((indexOfMax, current, index, arr) => (
+            current.exp > arr[indexOfMax].exp ? index : indexOfMax
+        ), 0);
+        
+        hands[winnerIndex].isWinner = true;
+
+        return hands;
+    }
+
+    dealCards(array) {
+        let shuffled = this.shuffle(array);
+        let cutted = this.cut(shuffled);
+        let hands = cutted.map(el => ({
+            cards : el,
+            exp : this.getTotalExperience(el),
+            isWinner : false
+        }));
+        
+        return this.setWinner(hands);
     }
 
     render() {
@@ -24,8 +52,15 @@ class Pokegame extends React.Component {
 
         return (
             <div>
-                <Pokedex pokemons={hands[0]} />;
-                <Pokedex pokemons={hands[1]} />;
+                {hands.map((h, i) => (
+                    <div key={i}>
+                    <Pokedex 
+                        pokemons={h.cards} 
+                        exp={h.exp} 
+                        isWinner={h.isWinner}
+                    />
+                    </div>
+                ))}
             </div>
         );
     }
