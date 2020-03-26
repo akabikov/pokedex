@@ -10,3 +10,17 @@
     text-align: center;
     margin: 1rem;
 }
+
+.pokedex-winner-message {
+    text-align: center;
+    color: green;
+}
+
+.pokedex-loser-message {
+    text-align: center;
+    color: red;
+}
+
+.pokedex-experience {
+    text-align: center;
+}
