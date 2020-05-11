@@ -25,7 +25,7 @@ You can view online demo here: https://akabikov.github.io/pokedex/
 To run this project, install it locally using npm:
 
 ```shell
-$ cd ../roll-dice
+$ cd ../pokedex
 $ npm install
 $ npm start
 ```
